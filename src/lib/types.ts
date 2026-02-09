@@ -73,6 +73,23 @@ export interface WorkoutSession {
     moodAfter?: UserMood;
 }
 
+export interface TrackingPoint {
+    latitude: number;
+    longitude: number;
+    timestamp: number;
+    accuracy: number;
+}
+
+export interface ActiveSessionState {
+    isActive: boolean;
+    startTime: number | null;
+    path: TrackingPoint[];
+    distance: number; // meters
+    currentVelocity: number; // m/s
+    estimatedSteps: number;
+    burnedCalories: number;
+}
+
 export interface ProgressData {
     streak: number;
     lastWorkoutDate: Date | null;
@@ -80,5 +97,7 @@ export interface ProgressData {
     weeklyWorkouts: number;
     monthlyWorkouts: number;
     weightHistory: { date: Date; weight: number }[];
-    socialCount: number; // Soft social proof: X people worked out today
+    socialCount: number;
+    totalDistance: number;
+    totalActiveCalories: number;
 }

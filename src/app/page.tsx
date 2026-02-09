@@ -11,10 +11,12 @@ import { MoodSelector } from "@/components/dashboard/MoodSelector";
 import { SocialProof } from "@/components/dashboard/SocialProof";
 import { ThemeCustomizer } from "@/components/dashboard/ThemeCustomizer";
 import { MusicPlayer } from "@/components/dashboard/MusicPlayer";
+import { LiveTracker } from "@/components/dashboard/LiveTracker";
 import { AddActivityDialog } from "@/components/forms/AddActivityDialog";
 import { useFitnessStore } from "@/store/fitness-store";
-import { Flame, Footprints, Timer, Sparkles } from "lucide-react";
+import { Flame, Footprints, Timer, Sparkles, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -34,6 +36,18 @@ const item = {
 export default function Home() {
   const stats = useFitnessStore((state) => state.stats);
   const hasCompletedOnboarding = useFitnessStore((state) => state.hasCompletedOnboarding);
+
+  const activeSession = useFitnessStore((state) => state.activeSession);
+  const progress = useFitnessStore((state) => state.progress);
+  const checkDailyReset = useFitnessStore((state) => state.checkDailyReset);
+
+  useEffect(() => {
+    checkDailyReset();
+  }, []);
+
+  const activeMinutes = activeSession.isActive && activeSession.startTime
+    ? Math.floor((Date.now() - activeSession.startTime) / 60000)
+    : 0;
 
   return (
     <motion.div
@@ -82,17 +96,22 @@ export default function Home() {
             </motion.div>
             <motion.div variants={item} className="p-8 rounded-[2.5rem] glass-4k border border-white/5 bg-gradient-to-br from-cyan-500/10 to-transparent flex flex-col justify-center relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Timer className="h-20 w-20 text-cyan-400" />
+                {activeSession.isActive ? <MapPin className="h-20 w-20 text-cyan-400 animate-pulse" /> : <Timer className="h-20 w-20 text-cyan-400" />}
               </div>
-              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-400/60 mb-2">Active Bio-Time</h4>
+              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-400/60 mb-2">
+                {activeSession.isActive ? "Live GPS Session" : "Active Bio-Time"}
+              </h4>
               <div className="text-6xl font-black italic text-white tracking-tighter">
-                42<span className="text-2xl text-cyan-400/50 not-italic ml-1">min</span>
+                {activeSession.isActive ? Math.round(activeSession.distance) : stats.moveMin}
+                <span className="text-2xl text-cyan-400/50 not-italic ml-1">
+                  {activeSession.isActive ? "m" : "min"}
+                </span>
               </div>
               <div className="h-1.5 w-full bg-white/5 rounded-full mt-6 overflow-hidden border border-white/5">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: "70%" }}
-                  className="h-full bg-gradient-to-r from-cyan-500 to-purple-500 shadow-[0_0_15px_rgba(6,182,212,0.5)]"
+                  animate={{ width: activeSession.isActive ? "100%" : "70%" }}
+                  className={`h-full bg-gradient-to-r from-cyan-500 to-purple-500 shadow-[0_0_15px_rgba(6,182,212,0.5)] ${activeSession.isActive ? "animate-pulse" : ""}`}
                 />
               </div>
             </motion.div>
@@ -118,6 +137,9 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Floating Active Tracker */}
+      <LiveTracker />
+
       {/* Analytics & Insights Section */}
       <motion.div variants={item} className="space-y-8 pt-10 border-t border-white/5">
         <div className="flex items-center justify-between">
@@ -127,7 +149,7 @@ export default function Home() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <StatRing
             label="Calories"
-            value={stats.calories}
+            value={stats.calories + activeSession.burnedCalories}
             max={2500}
             unit="kcal"
             color="#ef4444"
@@ -135,7 +157,7 @@ export default function Home() {
           />
           <StatRing
             label="Steps"
-            value={stats.steps}
+            value={stats.steps + activeSession.estimatedSteps}
             max={10000}
             unit="steps"
             color="#3b82f6"
