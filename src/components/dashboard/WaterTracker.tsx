@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Droplet, Plus, Minus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Droplet, Plus, Minus, Waves } from "lucide-react";
 import { useFitnessStore } from "@/store/fitness-store";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,50 +15,71 @@ export function WaterTracker() {
     const percentage = Math.min((waterGlasses / waterGoal) * 100, 100);
 
     return (
-        <Card className="relative overflow-hidden border-cyan-400/20 bg-gradient-to-br from-cyan-500/5 to-cyan-600/5">
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Droplet className="h-5 w-5" style={{ color: '#00E5FF' }} />
-                    Hydration
+        <Card className="relative overflow-hidden glass-4k shadow-premium border-white/5 group">
+            <CardHeader className="relative pb-0">
+                <CardTitle className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-cyan-400">
+                    <Droplet className="h-4 w-4" />
+                    Hydration Log
                 </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="relative h-48 w-full rounded-xl bg-gradient-to-t from-cyan-950/50 to-transparent border border-cyan-500/20 overflow-hidden">
+            <CardContent className="space-y-6 pt-6 relative">
+                <div className="relative h-56 w-full rounded-[2.5rem] bg-black/40 border border-white/5 overflow-hidden group/tank">
+                    {/* Water Level */}
                     <motion.div
-                        className="absolute bottom-0 w-full"
-                        style={{ background: 'linear-gradient(to top, #00E5FF, #00E5FF)' }}
+                        className="absolute bottom-0 w-full bg-gradient-to-t from-cyan-500/40 to-cyan-400/20"
                         initial={{ height: 0 }}
                         animate={{ height: `${percentage}%` }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        transition={{ duration: 1.5, ease: [0.33, 1, 0.68, 1] }}
                     >
-                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJ3YXZlcyIgeD0iMCI yeT0iMCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIyMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTTAgMTBRMjUgNSA1MCAxMFQxMDAgMTAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC4zIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3dhdmVzKSIvPjwvc3ZnPg==')] opacity-30"></div>
-                    </motion.div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center z-10">
-                            <div className="text-4xl font-bold text-white drop-shadow-lg">
-                                {waterGlasses}/{waterGoal}
-                            </div>
-                            <div className="text-sm text-white/80">glasses</div>
+                        <div className="absolute top-0 left-0 w-full h-8 -translate-y-1/2 overflow-hidden">
+                            <motion.div
+                                className="w-[200%] h-full opacity-30 flex"
+                                animate={{ x: ["-50%", "0%"] }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                            >
+                                <Waves className="h-full w-full text-cyan-300" />
+                                <Waves className="h-full w-full text-cyan-300" />
+                            </motion.div>
                         </div>
+                    </motion.div>
+
+                    {/* Content Overlay */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+                        <motion.div
+                            key={waterGlasses}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="space-y-1"
+                        >
+                            <div className="text-6xl font-black italic tracking-tighter text-white">
+                                {waterGlasses}<span className="text-xl text-cyan-400/50 not-italic ml-1">/{waterGoal}</span>
+                            </div>
+                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-400/70">Bio-Liquid (Units)</div>
+                        </motion.div>
+                    </div>
+
+                    {/* Percentage Indicator */}
+                    <div className="absolute top-4 right-6">
+                        <div className="text-[10px] font-black italic text-white/30 tracking-tighter">{Math.round(percentage)}% CAP</div>
                     </div>
                 </div>
 
-                <div className="flex items-center justify-center gap-4">
+                <div className="flex items-center justify-between gap-4 bg-white/5 p-2 rounded-3xl border border-white/5">
                     <Button
                         size="icon"
-                        variant="outline"
+                        variant="ghost"
                         onClick={removeWater}
-                        className="h-10 w-10 rounded-full border-cyan-400/30 hover:bg-cyan-500/10"
+                        className="h-12 w-12 rounded-2xl hover:bg-red-500/10 text-muted-foreground hover:text-red-500 transition-colors"
                     >
-                        <Minus className="h-4 w-4" />
+                        <Minus className="h-5 w-5" />
                     </Button>
+                    <div className="h-8 w-px bg-white/10" />
                     <Button
-                        size="icon"
                         onClick={addWater}
-                        className="h-12 w-12 rounded-full"
-                        style={{ background: 'linear-gradient(135deg, #00E5FF 0%, #7B5CFF 100%)' }}
+                        className="flex-1 h-14 rounded-2xl gradient-purple-cyan neon-glow font-black italic uppercase tracking-wider text-sm shadow-xl hover:scale-[1.02] transition-transform"
                     >
-                        <Plus className="h-5 w-5" />
+                        <Plus className="h-5 w-5 mr-1" />
+                        Inject H2O
                     </Button>
                 </div>
             </CardContent>

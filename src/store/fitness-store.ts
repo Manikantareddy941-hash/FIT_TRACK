@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Activity, DailyStats, UserProfile, WorkoutPlan, WorkoutSession, ProgressData } from '@/lib/types';
+import { Activity, DailyStats, UserProfile, WorkoutPlan, WorkoutSession, ProgressData, UserMood, ThemeSettings } from '@/lib/types';
 
 interface FitnessStore {
     // Existing
@@ -14,6 +14,8 @@ interface FitnessStore {
     hasCompletedOnboarding: boolean;
     setUserProfile: (profile: UserProfile) => void;
     completeOnboarding: () => void;
+    setUserMood: (mood: UserMood) => void;
+    setThemeSettings: (settings: ThemeSettings) => void;
 
     // New - Workouts
     currentWorkoutPlan: WorkoutPlan | null;
@@ -26,6 +28,11 @@ interface FitnessStore {
     // New - Progress
     progress: ProgressData;
     updateWeight: (weight: number) => void;
+    updateSocialCount: () => void;
+
+    // New - Settings Engine
+    toggleUnits: () => void;
+    resetData: () => void;
 
     // Existing methods
     addActivity: (activity: Omit<Activity, 'id' | 'timestamp' | 'time'>) => void;
@@ -73,6 +80,12 @@ export const useFitnessStore = create<FitnessStore>()(
             hasCompletedOnboarding: false,
             setUserProfile: (profile) => set({ userProfile: profile }),
             completeOnboarding: () => set({ hasCompletedOnboarding: true }),
+            setUserMood: (mood) => set((state) => ({
+                userProfile: state.userProfile ? { ...state.userProfile, currentMood: mood } : null
+            })),
+            setThemeSettings: (settings) => set((state) => ({
+                userProfile: state.userProfile ? { ...state.userProfile, themeSettings: settings } : null
+            })),
 
             // Workouts
             currentWorkoutPlan: null,
@@ -130,7 +143,14 @@ export const useFitnessStore = create<FitnessStore>()(
                 weeklyWorkouts: 0,
                 monthlyWorkouts: 0,
                 weightHistory: [],
+                socialCount: 1420, // Mock social proof
             },
+            updateSocialCount: () => set((state) => ({
+                progress: {
+                    ...state.progress,
+                    socialCount: (state.progress?.socialCount ?? 1420) + Math.floor(Math.random() * 5)
+                }
+            })),
             updateWeight: (weight) => {
                 set((state) => ({
                     progress: {
@@ -140,7 +160,19 @@ export const useFitnessStore = create<FitnessStore>()(
                             { date: new Date(), weight },
                         ],
                     },
+                    userProfile: state.userProfile ? { ...state.userProfile, weight } : null
                 }));
+            },
+
+            // Settings Engine
+            toggleUnits: () => set((state) => ({
+                userProfile: state.userProfile
+                    ? { ...state.userProfile, units: state.userProfile.units === 'metric' ? 'imperial' : 'metric' }
+                    : null
+            })),
+            resetData: () => {
+                localStorage.removeItem('fittrack-storage');
+                window.location.reload();
             },
 
             // Existing methods

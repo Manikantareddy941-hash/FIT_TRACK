@@ -16,6 +16,14 @@ export interface DailyStats {
     moveMin: number;
 }
 
+export type UserMood = 'energized' | 'tired' | 'stressed' | 'focused' | 'unmotivated';
+export type MeasurementUnits = 'metric' | 'imperial';
+
+export interface ThemeSettings {
+    accentColor: string; // hex
+    glowIntensity: number; // 0 to 1
+}
+
 export interface UserProfile {
     age: number;
     height: number; // cm
@@ -24,6 +32,9 @@ export interface UserProfile {
     equipment: 'home' | 'gym' | 'none';
     timeAvailable: number; // minutes per day
     level: 'beginner' | 'intermediate' | 'advanced';
+    currentMood?: UserMood;
+    themeSettings?: ThemeSettings;
+    units: MeasurementUnits;
 }
 
 export interface Exercise {
@@ -37,6 +48,7 @@ export interface Exercise {
     instructions: string;
     muscleGroup: string;
     equipment: 'none' | 'dumbbells' | 'barbell' | 'machine';
+    moodIntensity?: number; // 1 to 5, how much energy it requires
 }
 
 export interface WorkoutPlan {
@@ -46,6 +58,7 @@ export interface WorkoutPlan {
     exercises: Exercise[];
     totalDuration: number; // minutes
     caloriesBurn: number;
+    moodType?: UserMood;
 }
 
 export interface WorkoutSession {
@@ -56,6 +69,8 @@ export interface WorkoutSession {
     completedExercises: string[];
     duration: number;
     caloriesBurned: number;
+    moodBefore?: UserMood;
+    moodAfter?: UserMood;
 }
 
 export interface ProgressData {
@@ -65,4 +80,5 @@ export interface ProgressData {
     weeklyWorkouts: number;
     monthlyWorkouts: number;
     weightHistory: { date: Date; weight: number }[];
+    socialCount: number; // Soft social proof: X people worked out today
 }

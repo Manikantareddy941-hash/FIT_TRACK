@@ -66,36 +66,79 @@
 
 /* ================================
    LIGHT THEME
-================================ */
+================================*/
+/* 4K & PREMIUM UI REFINEMENTS */
 :root {
-  --radius: 0.625rem;
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+  --font-heading: var(--font-space-grotesk), system-ui, sans-serif;
+}
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+body {
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+}
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+  font-family: var(--font-heading);
+}
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+/* ULTRA-HD UTILITIES */
+.border-fine {
+  border-width: 0.5px;
+}
 
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+.shadow-premium {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
 
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+.glass-4k {
+  background: rgba(10, 10, 13, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+/* Fluid Typography for 4K */
+@media (min-width: 2560px) {
+  html {
+    font-size: 110%;
+    /* Scale up slightly for 4K displays */
+  }
+}
 
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+:root {
+  --background: #030303;
+  --foreground: #f0f0f0;
+  --card: #0a0a0d;
+  --card-foreground: #f0f0f0;
+  --popover: #0a0a0d;
+  --popover-foreground: #f0f0f0;
+  --primary: #7B5CFF;
+  --primary-foreground: #ffffff;
+  --secondary: #00E5FF;
+  --secondary-foreground: #000000;
+  --muted: #1a1a20;
+  --muted-foreground: #8a8a9a;
+  --accent: #A3FF12;
+  --accent-foreground: #000000;
+  --destructive: #ff3e3e;
+  --destructive-foreground: #ffffff;
+  --border: #1f1f2a;
+  --input: #1f1f2a;
+  --ring: #7B5CFF;
+  --radius: 1rem;
 
-  --destructive: oklch(0.577 0.245 27.325);
-
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  /* Dynamic Theme Variables */
+  --primary-glow: #7B5CFF;
+  --glow-opacity: 0.5;
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
