@@ -29,7 +29,7 @@ const playlists: Record<PlaylistMode, { tracks: Track[]; color: string; icon: an
             { src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', label: 'Overdrive' },
             { src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3', label: 'Power Surge' }
         ],
-        color: '#A3FF12',
+        color: 'var(--primary)',
         icon: Zap,
     },
     'Focus': {
@@ -38,7 +38,7 @@ const playlists: Record<PlaylistMode, { tracks: Track[]; color: string; icon: an
             { src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3', label: 'Deep State' },
             { src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', label: 'Alpha Waves' }
         ],
-        color: '#00E5FF',
+        color: 'var(--accent)',
         icon: FocusIcon,
     },
     'Chill': {
@@ -47,7 +47,7 @@ const playlists: Record<PlaylistMode, { tracks: Track[]; color: string; icon: an
             { src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3', label: 'Oceanic Drift' },
             { src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3', label: 'Lunar Soft' }
         ],
-        color: '#7B5CFF',
+        color: 'oklch(0.65 0.12 300)',
         icon: Moon,
     }
 };
@@ -85,23 +85,21 @@ export function MusicPlayer({ autoStart = false }: { autoStart?: boolean }) {
     }, [currentTrack, isPlaying]);
 
     return (
-        <div className="p-6 rounded-[2.5rem] glass-4k border-white/5 relative overflow-hidden group shadow-premium">
+        <div className="p-8 rounded-[2.5rem] glass-4k relative overflow-hidden group shadow-2xl border-none">
             <audio ref={audioRef} loop />
-
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent pointer-events-none" />
 
             <div className="relative z-10 flex items-center justify-between mb-8">
                 <div className="flex items-center gap-4">
                     <div className="h-14 w-14 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center relative group/icon">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-cyan-400/20 opacity-0 group-hover/icon:opacity-100 transition-opacity" />
-                        <Music2 className="h-6 w-6 text-purple-400 relative animate-pulse" />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 opacity-0 group-hover/icon:opacity-100 transition-opacity" />
+                        <Music2 className="h-6 w-6 text-primary relative animate-pulse" />
                     </div>
                     <div>
-                        <h4 className="text-sm font-black italic uppercase tracking-widest text-white leading-none mb-1">{currentTrack.label}</h4>
+                        <h4 className="text-sm font-black italic uppercase tracking-widest text-foreground leading-none mb-1">{currentTrack.label}</h4>
                         <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-[0.2em]">{mode} Interface Online</p>
                     </div>
                 </div>
-                <div className="flex gap-1 bg-black/40 p-1 rounded-xl border border-white/5">
+                <div className="flex gap-1 glass-4k p-1 rounded-xl shadow-none border-white/5 scale-90">
                     {(Object.keys(playlists) as PlaylistMode[]).map((p) => {
                         const Icon = playlists[p].icon;
                         const active = mode === p;
@@ -110,10 +108,10 @@ export function MusicPlayer({ autoStart = false }: { autoStart?: boolean }) {
                                 key={p}
                                 size="icon"
                                 variant="ghost"
-                                className={`h-8 w-8 rounded-lg transition-all ${active ? 'bg-white/10' : 'hover:bg-white/5'}`}
+                                className={`h-8 w-8 rounded-lg transition-all ${active ? 'bg-black/10' : 'hover:bg-black/5'}`}
                                 onClick={() => setMode(p)}
                             >
-                                <Icon className="h-4 w-4" style={{ color: active ? playlists[p].color : 'rgba(255,255,255,0.2)' }} />
+                                <Icon className="h-4 w-4" style={{ color: active ? playlists[p].color : 'rgba(0,0,0,0.2)' }} />
                             </Button>
                         );
                     })}
@@ -123,7 +121,7 @@ export function MusicPlayer({ autoStart = false }: { autoStart?: boolean }) {
             <div className="relative z-10 flex items-center gap-6">
                 <Button
                     onClick={() => setIsPlaying(!isPlaying)}
-                    className="h-16 w-16 rounded-full gradient-purple-cyan neon-glow hover:scale-110 transition-transform shadow-2xl shrink-0"
+                    className="h-16 w-16 rounded-full gradient-primary neon-glow hover:scale-110 transition-transform shadow-2xl shrink-0"
                 >
                     {isPlaying ? <Pause className="h-7 w-7 fill-current" /> : <Play className="h-7 w-7 fill-current ml-1" />}
                 </Button>
@@ -145,13 +143,13 @@ export function MusicPlayer({ autoStart = false }: { autoStart?: boolean }) {
                             </div>
                         </div>
                         <div className="text-right">
-                            <span className="text-[10px] font-black italic text-white/40 tracking-tighter uppercase">{isPlaying ? 'Transmitting' : 'Idle'}</span>
+                            <span className="text-[10px] font-black italic text-foreground/40 tracking-tighter uppercase">{isPlaying ? 'Transmitting' : 'Idle'}</span>
                         </div>
                     </div>
 
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                    <div className="h-1.5 w-full glass-4k rounded-full overflow-hidden shadow-none">
                         <motion.div
-                            className="h-full bg-gradient-to-r from-purple-500 via-cyan-400 to-lime-400"
+                            className="h-full bg-gradient-to-r from-primary via-accent to-primary"
                             animate={{
                                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                                 width: isPlaying ? '100%' : '0%'
@@ -169,9 +167,9 @@ export function MusicPlayer({ autoStart = false }: { autoStart?: boolean }) {
                     variant="ghost"
                     size="icon"
                     onClick={handleSkip}
-                    className="h-12 w-12 rounded-2xl border border-transparent hover:border-white/5 hover:bg-white/5 transition-all group/skip"
+                    className="h-12 w-12 rounded-2xl border border-transparent hover:border-black/5 hover:bg-black/5 transition-all group/skip"
                 >
-                    <SkipForward className="h-6 w-6 text-muted-foreground group-hover/skip:text-white transition-colors" />
+                    <SkipForward className="h-6 w-6 text-muted-foreground group-hover/skip:text-foreground transition-colors" />
                 </Button>
             </div>
         </div>

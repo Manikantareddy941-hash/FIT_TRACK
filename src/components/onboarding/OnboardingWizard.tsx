@@ -54,20 +54,20 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-2xl">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-purple-500/10 blur-[150px] rounded-full animate-pulse" />
-                <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-cyan-500/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+                <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-primary/10 blur-[150px] rounded-full animate-pulse" />
+                <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-accent/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
             </div>
 
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="w-full max-w-xl glass-4k rounded-[3rem] border-white/5 shadow-premium relative overflow-hidden p-10 md:p-14"
+                className="w-full max-w-xl glass-4k rounded-[3rem] border-black/5 shadow-premium relative overflow-hidden p-10 md:p-14"
             >
-                <div className="absolute top-0 left-0 w-full h-1 bg-white/5">
+                <div className="absolute top-0 left-0 w-full h-1 bg-black/5">
                     <motion.div
-                        className="h-full bg-gradient-to-r from-purple-500 via-cyan-400 to-lime-400 shadow-[0_0_15px_rgba(123,92,255,0.5)]"
+                        className="h-full bg-gradient-to-r from-primary via-accent to-primary shadow-[0_0_15px_rgba(var(--primary),0.5)]"
                         animate={{ width: `${(step / 4) * 100}%` }}
                     />
                 </div>
@@ -75,14 +75,14 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
                 <div className="space-y-12">
                     <div className="space-y-4">
                         <div className="flex items-center gap-2">
-                            <div className="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full">
-                                <span className="text-[8px] font-black uppercase tracking-[0.3em] text-purple-400">Initialize Sequence</span>
+                            <div className="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full">
+                                <span className="text-[8px] font-black uppercase tracking-[0.3em] text-primary">Initialize Sequence</span>
                             </div>
-                            <div className="h-px flex-1 bg-white/5" />
-                            <span className="text-[10px] font-black text-white/20 tracking-widest">0{step} / 04</span>
+                            <div className="h-px flex-1 bg-black/5" />
+                            <span className="text-[10px] font-black text-foreground/20 tracking-widest">0{step} / 04</span>
                         </div>
-                        <h2 className="text-5xl font-black italic tracking-tighter uppercase leading-none text-white">
-                            Bio-Data <span className="text-purple-500">Entry</span>
+                        <h2 className="text-5xl font-black italic tracking-tighter uppercase leading-none text-foreground">
+                            Bio-Data <span className="text-primary">Entry</span>
                         </h2>
                         <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest leading-relaxed">Customize your biological profile for optimal protocol generation</p>
                     </div>
@@ -99,32 +99,32 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
                             >
                                 <div className="grid gap-6">
                                     <div className="space-y-3">
-                                        <Label className="text-[10px] font-black uppercase tracking-widest text-white/40 ml-2">Chrono-Age</Label>
+                                        <Label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-2">Chrono-Age</Label>
                                         <Input
                                             type="number"
                                             placeholder="25"
-                                            className="h-16 rounded-2xl bg-white/5 border-white/5 font-black italic text-xl focus:ring-purple-500/20 px-6 transition-all"
+                                            className="h-16 rounded-2xl bg-white/5 border-white/5 font-black italic text-xl focus:ring-primary/20 px-6 transition-all"
                                             value={profile.age ?? ""}
                                             onChange={(e) => setProfile({ ...profile, age: Number(e.target.value) })}
                                         />
                                     </div>
                                     <div className="grid grid-cols-2 gap-6">
                                         <div className="space-y-3">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-white/40 ml-2">Stature (cm)</Label>
+                                            <Label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-2">Stature (cm)</Label>
                                             <Input
                                                 type="number"
                                                 placeholder="180"
-                                                className="h-16 rounded-2xl bg-white/5 border-white/5 font-black italic text-xl focus:ring-purple-500/20 px-6 transition-all"
+                                                className="h-16 rounded-2xl bg-white/5 border-white/5 font-black italic text-xl focus:ring-primary/20 px-6 transition-all"
                                                 value={profile.height ?? ""}
                                                 onChange={(e) => setProfile({ ...profile, height: Number(e.target.value) })}
                                             />
                                         </div>
                                         <div className="space-y-3">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-white/40 ml-2">Mass (kg)</Label>
+                                            <Label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-2">Mass (kg)</Label>
                                             <Input
                                                 type="number"
                                                 placeholder="75"
-                                                className="h-16 rounded-2xl bg-white/5 border-white/5 font-black italic text-xl focus:ring-purple-500/20 px-6 transition-all"
+                                                className="h-16 rounded-2xl bg-black/5 border-black/5 font-black italic text-xl focus:ring-primary/20 px-6 transition-all text-foreground"
                                                 value={profile.weight ?? ""}
                                                 onChange={(e) => setProfile({ ...profile, weight: Number(e.target.value) })}
                                             />
@@ -132,7 +132,7 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
                                     </div>
                                 </div>
                                 <Button
-                                    className="w-full h-16 rounded-3xl gradient-purple-cyan font-black italic uppercase tracking-[0.2em] text-sm overflow-hidden group shadow-2xl"
+                                    className="w-full h-16 rounded-3xl gradient-primary font-black italic uppercase tracking-[0.2em] text-sm overflow-hidden group shadow-2xl"
                                     disabled={!isNumber(profile.age) || !isNumber(profile.height) || !isNumber(profile.weight)}
                                     onClick={() => setStep(2)}
                                 >
@@ -154,22 +154,22 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
                                         transition={{ delay: i * 0.1 }}
                                         onClick={() => setProfile({ ...profile, goal: g.id as any })}
                                         className={`flex items-center gap-6 p-6 rounded-[2rem] border transition-all duration-300 text-left group ${profile.goal === g.id
-                                                ? "bg-purple-500/10 border-purple-500/50 shadow-[0_0_30px_rgba(123,92,255,0.15)]"
-                                                : "bg-white/5 border-white/5 hover:bg-white/10"
+                                            ? "bg-primary/10 border-primary/50 shadow-[0_0_30px_rgba(var(--primary),0.05)]"
+                                            : "bg-black/5 border-black/5 hover:bg-black/10"
                                             }`}
                                     >
-                                        <div className={`h-14 w-14 rounded-2xl flex items-center justify-center transition-all ${profile.goal === g.id ? "bg-purple-500 text-black shadow-lg" : "bg-white/5 text-purple-400"
+                                        <div className={`h-14 w-14 rounded-2xl flex items-center justify-center transition-all ${profile.goal === g.id ? "bg-primary text-white shadow-lg" : "bg-white/5 text-primary"
                                             }`}>
                                             <g.icon className="h-7 w-7" />
                                         </div>
                                         <div className="flex-1">
-                                            <h3 className="font-black italic text-lg uppercase leading-none mb-1 text-white group-hover:text-purple-400 transition-colors">{g.label}</h3>
+                                            <h3 className="font-black italic text-lg uppercase leading-none mb-1 text-foreground group-hover:text-primary transition-colors">{g.label}</h3>
                                             <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">{g.desc}</p>
                                         </div>
                                     </motion.button>
                                 ))}
                                 <Button
-                                    className="w-full h-16 rounded-3xl gradient-purple-cyan font-black italic uppercase tracking-[0.2em] text-sm mt-4 shadow-xl"
+                                    className="w-full h-16 rounded-3xl gradient-primary font-black italic uppercase tracking-[0.2em] text-sm mt-4 shadow-xl"
                                     disabled={!profile.goal}
                                     onClick={() => setStep(3)}
                                 >
@@ -188,23 +188,23 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: i * 0.1 }}
                                         onClick={() => setProfile({ ...profile, equipment: e.id as any })}
-                                        className={`flex items-center gap-6 p-6 rounded-[2rem] border transition-all duration-300 text-left group ${profile.equipment === e.id
-                                                ? "bg-cyan-500/10 border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.15)]"
-                                                : "bg-white/5 border-white/5 hover:bg-white/10"
+                                        className={`flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 group ${profile.equipment === e.id
+                                            ? "bg-accent/10 border-accent/50 shadow-[0_0_30px_rgba(var(--accent),0.05)]"
+                                            : "bg-black/5 border-black/5 hover:bg-black/10"
                                             }`}
                                     >
-                                        <div className={`h-14 w-14 rounded-2xl flex items-center justify-center transition-all ${profile.equipment === e.id ? "bg-cyan-500 text-black shadow-lg" : "bg-white/5 text-cyan-400"
+                                        <div className={`h-14 w-14 rounded-2xl flex items-center justify-center transition-all ${profile.equipment === e.id ? "bg-accent text-white shadow-lg" : "bg-white/5 text-accent"
                                             }`}>
                                             <e.icon className="h-7 w-7" />
                                         </div>
                                         <div className="flex-1">
-                                            <h3 className="font-black italic text-lg uppercase leading-none mb-1 text-white group-hover:text-cyan-400 transition-colors">{e.label}</h3>
+                                            <h3 className="font-black italic text-lg uppercase leading-none mb-1 text-foreground group-hover:text-accent transition-colors">{e.label}</h3>
                                             <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">{e.desc}</p>
                                         </div>
                                     </motion.button>
                                 ))}
                                 <Button
-                                    className="w-full h-16 rounded-3xl gradient-cyan-lime font-black italic uppercase tracking-[0.2em] text-sm mt-4 shadow-xl text-black"
+                                    className="w-full h-16 rounded-3xl bg-accent text-accent-foreground font-black italic uppercase tracking-[0.2em] text-sm mt-4 shadow-xl"
                                     disabled={!profile.equipment}
                                     onClick={() => setStep(4)}
                                 >
@@ -217,10 +217,10 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
                         {step === 4 && (
                             <motion.div key="step4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-10">
                                 <div className="space-y-4">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 ml-2">Temporal Allocation (min)</Label>
+                                    <Label className="text-[10px] font-black uppercase tracking-[0.4em] text-foreground/40 ml-2">Temporal Allocation (min)</Label>
                                     <Input
                                         type="number"
-                                        className="h-20 rounded-[2rem] bg-white/5 border-white/5 font-black italic text-4xl text-center focus:ring-lime-500/20 px-6 transition-all text-white"
+                                        className="h-20 rounded-[2rem] bg-black/5 border-black/5 font-black italic text-4xl text-center focus:ring-accent/20 px-6 transition-all text-foreground"
                                         value={profile.timeAvailable ?? ""}
                                         onChange={(e) => setProfile({ ...profile, timeAvailable: Number(e.target.value) })}
                                     />
@@ -232,8 +232,8 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
                                             key={t}
                                             onClick={() => setProfile({ ...profile, timeAvailable: t })}
                                             className={`h-16 rounded-2xl flex flex-col items-center justify-center border transition-all duration-300 ${profile.timeAvailable === t
-                                                    ? "bg-lime-400/10 border-lime-400 text-lime-400 shadow-[0_0_20px_rgba(163,255,18,0.1)]"
-                                                    : "bg-white/5 border-white/5 text-white/40 hover:bg-white/10"
+                                                ? "bg-accent/10 border-accent text-accent shadow-[0_0_20px_rgba(var(--accent),0.1)]"
+                                                : "bg-black/5 border-black/5 text-foreground/40 hover:bg-black/10"
                                                 }`}
                                         >
                                             <span className="text-xl font-black italic leading-none">{t}</span>
@@ -242,13 +242,13 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
                                     ))}
                                 </div>
 
-                                <div className="p-6 rounded-[2rem] bg-white/5 border border-white/5 flex items-start gap-4">
-                                    <ShieldCheck className="h-6 w-6 text-lime-400 mt-1" />
+                                <div className="p-6 rounded-[2rem] bg-black/5 border border-black/5 flex items-start gap-4">
+                                    <ShieldCheck className="h-6 w-6 text-accent mt-1" />
                                     <p className="text-[10px] font-bold text-muted-foreground/60 leading-relaxed uppercase tracking-tighter italic">"Your biological integrity is our priority. This protocol will be calibrated to your exact temporal window."</p>
                                 </div>
 
                                 <Button
-                                    className="w-full h-20 rounded-[2rem] gradient-purple-cyan font-black italic uppercase tracking-[0.3em] text-lg shadow-2xl relative overflow-hidden group"
+                                    className="w-full h-20 rounded-[2rem] gradient-primary font-black italic uppercase tracking-[0.3em] text-lg shadow-2xl relative overflow-hidden group"
                                     disabled={!isNumber(profile.timeAvailable)}
                                     onClick={handleComplete}
                                 >

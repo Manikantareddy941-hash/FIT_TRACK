@@ -3,6 +3,8 @@
 import { Outfit, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Sidebar as SidebarBase } from "@/components/layout/Sidebar";
+import { NavDock } from "@/components/layout/NavDock";
+import { QuickLogFAB } from "@/components/ui/QuickLogFAB";
 import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
 import { useFitnessStore } from "@/store/fitness-store";
 import { useState, useEffect } from "react";
@@ -51,17 +53,22 @@ export default function RootLayout({
   }, [hasCompletedOnboarding, mounted]);
 
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="light" suppressHydrationWarning>
       <body className={`${outfit.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground flex font-sans`} suppressHydrationWarning>
         {mounted && showOnboarding && !hasCompletedOnboarding && (
           <OnboardingWizard onComplete={() => setShowOnboarding(false)} />
         )}
 
-        <SidebarBase />
+        <div className="hidden lg:block">
+          <SidebarBase />
+        </div>
 
-        <main className="flex-1 md:ml-64 p-4 md:p-8 overflow-y-auto h-screen">
+        <main className="flex-1 lg:ml-64 p-4 md:p-10 pb-32 lg:pb-10 overflow-x-hidden min-h-screen">
           {children}
         </main>
+
+        <NavDock />
+        <QuickLogFAB />
       </body>
     </html>
   );

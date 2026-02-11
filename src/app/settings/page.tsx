@@ -26,7 +26,7 @@ export default function SettingsPage() {
     return (
         <div className="max-w-4xl mx-auto space-y-10 pb-20">
             <header className="space-y-2">
-                <h1 className="text-5xl font-black italic uppercase tracking-tighter bg-gradient-to-r from-purple-500 via-cyan-400 to-lime-400 bg-clip-text text-transparent">
+                <h1 className="text-5xl font-black italic uppercase tracking-tighter bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                     Parameters
                 </h1>
                 <p className="text-muted-foreground font-medium uppercase tracking-widest text-xs">System configuration & Bio-data</p>
@@ -39,7 +39,7 @@ export default function SettingsPage() {
                         <Button
                             key={item}
                             variant="ghost"
-                            className={`w-full justify-start rounded-xl font-bold uppercase tracking-widest text-[10px] h-12 ${i === 0 ? 'bg-white/5 text-purple-400 border border-white/5' : 'text-muted-foreground'
+                            className={`w-full justify-start rounded-xl font-bold uppercase tracking-widest text-[10px] h-12 ${i === 0 ? 'bg-white/5 text-primary border border-white/5' : 'text-muted-foreground'
                                 }`}
                         >
                             {item}
@@ -53,7 +53,7 @@ export default function SettingsPage() {
                     <Card className="glass-4k shadow-premium rounded-[2rem] border-white/5">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-3 text-xl font-black italic uppercase">
-                                <User className="h-5 w-5 text-purple-500" />
+                                <User className="h-5 w-5 text-primary" />
                                 Bio-Data
                             </CardTitle>
                         </CardHeader>
@@ -65,7 +65,7 @@ export default function SettingsPage() {
                                         type="number"
                                         value={userProfile.weight}
                                         onChange={(e) => setUserProfile({ ...userProfile, weight: Number(e.target.value) })}
-                                        className="h-14 rounded-2xl bg-white/5 border-white/10 font-bold focus:ring-purple-500/20"
+                                        className="h-14 rounded-2xl bg-white/5 border-white/10 font-bold focus:ring-primary/20"
                                     />
                                 </div>
                                 <div className="space-y-2">
@@ -74,11 +74,11 @@ export default function SettingsPage() {
                                         type="number"
                                         value={userProfile.height}
                                         onChange={(e) => setUserProfile({ ...userProfile, height: Number(e.target.value) })}
-                                        className="h-14 rounded-2xl bg-white/5 border-white/10 font-bold focus:ring-purple-500/20"
+                                        className="h-14 rounded-2xl bg-white/5 border-white/10 font-bold focus:ring-primary/20"
                                     />
                                 </div>
                             </div>
-                            <Button className="w-full h-14 rounded-2xl gradient-purple-cyan font-black italic uppercase tracking-wider">Sync Changes</Button>
+                            <Button className="w-full h-14 rounded-2xl gradient-primary font-black italic uppercase tracking-wider">Sync Changes</Button>
                         </CardContent>
                     </Card>
 
@@ -86,7 +86,7 @@ export default function SettingsPage() {
                     <Card className="glass-4k shadow-premium rounded-[2rem] border-white/5">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-3 text-xl font-black italic uppercase">
-                                <Globe className="h-5 w-5 text-cyan-400" />
+                                <Globe className="h-5 w-5 text-accent" />
                                 Localization
                             </CardTitle>
                         </CardHeader>

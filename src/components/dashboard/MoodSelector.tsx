@@ -15,11 +15,11 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 const moods: { id: UserMood; label: string; icon: any; color: string; bg: string }[] = [
-    { id: 'energized', label: 'Energized', icon: Zap, color: '#A3FF12', bg: 'rgba(163, 255, 18, 0.1)' },
-    { id: 'focused', label: 'Focused', icon: FocusIcon, color: '#00E5FF', bg: 'rgba(0, 229, 255, 0.1)' },
-    { id: 'stressed', label: 'Stressed', icon: MessageSquare, color: '#7B5CFF', bg: 'rgba(123, 92, 255, 0.1)' },
-    { id: 'tired', label: 'Tired', icon: Coffee, color: '#F59E0B', bg: 'rgba(245, 158, 11, 0.1)' },
-    { id: 'unmotivated', label: 'Low Energy', icon: CloudRain, color: '#6B7280', bg: 'rgba(107, 114, 128, 0.1)' },
+    { id: 'energized', label: 'Energized', icon: Zap, color: 'var(--accent)', bg: 'rgba(var(--accent), 0.1)' },
+    { id: 'focused', label: 'Focused', icon: FocusIcon, color: 'var(--primary)', bg: 'rgba(var(--primary), 0.1)' },
+    { id: 'stressed', label: 'Stressed', icon: MessageSquare, color: 'oklch(0.65 0.12 300)', bg: 'oklch(0.65 0.12 300 / 0.1)' },
+    { id: 'tired', label: 'Tired', icon: Coffee, color: 'oklch(0.75 0.15 40)', bg: 'oklch(0.75 0.15 40 / 0.1)' },
+    { id: 'unmotivated', label: 'Low Energy', icon: CloudRain, color: 'oklch(0.6 0.18 20)', bg: 'oklch(0.6 0.18 20 / 0.1)' },
 ];
 
 export function MoodSelector() {
@@ -37,9 +37,9 @@ export function MoodSelector() {
     };
 
     return (
-        <div className="space-y-6 p-6 rounded-[2.5rem] glass-4k border-white/5 relative overflow-hidden group">
+        <div className="space-y-6 p-8 rounded-[2.5rem] glass-4k relative overflow-hidden group border-none shadow-2xl">
             <div className="absolute top-0 right-0 p-6 opacity-20">
-                <Sparkles className="h-12 w-12 text-purple-500 animate-pulse" />
+                <Sparkles className="h-12 w-12 text-primary animate-pulse" />
             </div>
 
             <div className="relative z-10">
@@ -57,8 +57,8 @@ export function MoodSelector() {
                                 <Button
                                     onClick={() => handleMoodSelect(mood.id)}
                                     className={`h-14 px-6 rounded-2xl transition-all border-fine relative group/mood ${isActive
-                                            ? 'bg-white/10 text-white border-white/20'
-                                            : 'bg-white/5 text-muted-foreground border-transparent hover:border-white/10 hover:bg-white/10 hover:text-white'
+                                        ? 'bg-black/5 text-foreground border-black/10'
+                                        : 'glass-4k text-muted-foreground border-transparent hover:border-black/10 hover:bg-black/5 hover:text-foreground shadow-none'
                                         }`}
                                     style={{
                                         boxShadow: isActive ? `0 10px 30px -5px ${mood.color}33` : 'none'

@@ -25,6 +25,7 @@ export interface ThemeSettings {
 }
 
 export interface UserProfile {
+    name?: string;
     age: number;
     height: number; // cm
     weight: number; // kg

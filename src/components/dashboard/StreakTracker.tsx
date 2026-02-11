@@ -8,12 +8,12 @@ export function StreakTracker() {
     const progress = useFitnessStore((state) => state.progress);
     const streakLevel = Math.min(Math.floor(progress.streak / 7), 5);
 
-    // Dynamic glow color based on streak length
-    const glowColors = ['#A3FF12', '#00E5FF', '#7B5CFF', '#F59E0B', '#EF4444'];
+    // Dynamic glow color based on streak length (Professional Palette)
+    const glowColors = ['var(--accent)', 'var(--primary)', 'oklch(0.65 0.12 300)', 'oklch(0.75 0.15 40)', 'oklch(0.6 0.18 20)'];
     const currentColor = glowColors[streakLevel % glowColors.length];
 
     return (
-        <div className="relative overflow-hidden p-8 rounded-[2.5rem] glass-4k border-white/5 group shadow-premium transition-all duration-700">
+        <div className="relative overflow-hidden p-8 rounded-[2.5rem] glass-4k border-none group shadow-2xl transition-all duration-700">
             {/* Background Glow */}
             <div
                 className="absolute inset-0 opacity-5 blur-[100px] transition-colors duration-1000"
@@ -22,7 +22,7 @@ export function StreakTracker() {
 
             <div className="relative z-10 flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center relative">
+                    <div className="h-12 w-12 rounded-2xl bg-black/5 border border-black/5 flex items-center justify-center relative">
                         <Flame className="h-6 w-6 relative z-10" style={{ color: currentColor }} />
                         <motion.div
                             animate={{ opacity: [0.2, 0.5, 0.2] }}
@@ -37,7 +37,7 @@ export function StreakTracker() {
                             {Array.from({ length: 5 }).map((_, i) => (
                                 <div
                                     key={i}
-                                    className={`h-1 w-5 rounded-full transition-all duration-500 ${i <= streakLevel ? 'opacity-100' : 'opacity-10 bg-white'}`}
+                                    className={`h-1 w-5 rounded-full transition-all duration-500 ${i <= streakLevel ? 'opacity-100' : 'opacity-10 bg-black'}`}
                                     style={{ backgroundColor: i <= streakLevel ? currentColor : undefined }}
                                 />
                             ))}
@@ -59,8 +59,8 @@ export function StreakTracker() {
                     <div
                         className="text-8xl font-black italic tracking-tighter leading-none"
                         style={{
-                            color: 'white',
-                            textShadow: `0 0 30px ${currentColor}33`
+                            color: 'var(--foreground)',
+                            textShadow: `0 0 30px ${currentColor}22`
                         }}
                     >
                         {progress.streak}
@@ -73,21 +73,21 @@ export function StreakTracker() {
                     </div>
                 </motion.div>
 
-                <div className="text-[10px] font-black uppercase tracking-[0.4em] mt-4 text-white/40">
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] mt-4 text-foreground/40">
                     Cycles Completed
                 </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center bg-white/5 -mx-8 px-8 pb-2">
+            <div className="mt-8 pt-6 border-t border-black/5 flex justify-between items-center glass-4k rounded-b-[2.5rem] rounded-t-none -mx-8 px-8 pb-2 shadow-none border-none">
                 <div className="space-y-1">
-                    <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/40">Next Evolution</p>
+                    <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">Next Evolution</p>
                     <div className="flex items-center gap-2">
-                        <div className="h-1.5 w-1.5 rounded-full bg-lime-400 shadow-[0_0_8px_#A3FF12]" />
-                        <span className="text-xs font-bold uppercase tracking-tight text-white/80">Hyper-Legendary (7 Days)</span>
+                        <div className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(var(--accent),0.3)]" />
+                        <span className="text-xs font-bold uppercase tracking-tight text-foreground/80">Hyper-Legendary (7 Days)</span>
                     </div>
                 </div>
                 <div
-                    className="h-12 w-12 rounded-2xl border border-white/10 flex items-center justify-center bg-white/5 group-hover:scale-110 transition-transform"
+                    className="h-12 w-12 rounded-2xl border border-black/5 flex items-center justify-center bg-black/5 group-hover:scale-110 transition-transform"
                     style={{ borderColor: `${currentColor}33` }}
                 >
                     <Zap className="h-5 w-5" style={{ color: currentColor }} />

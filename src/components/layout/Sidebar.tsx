@@ -17,15 +17,15 @@ export function Sidebar() {
     const pathname = usePathname();
 
     return (
-        <aside className="fixed left-0 top-0 z-40 h-screen w-16 -translate-x-full md:translate-x-0 md:w-64 glass-4k border-r border-white/5 transition-all duration-500 ease-in-out">
+        <aside className="fixed left-0 top-0 z-40 h-screen w-16 -translate-x-full md:translate-x-0 md:w-64 glass-4k border-none transition-all duration-500 ease-in-out rounded-none backdrop-blur-3xl shadow-none">
             <div className="flex h-20 items-center px-6 mb-4">
                 <Link href="/" className="flex items-center gap-2 group">
                     <div className="relative">
-                        <div className="absolute inset-0 bg-purple-500 blur-lg opacity-40 group-hover:opacity-80 transition-opacity" />
-                        <Zap className="h-8 w-8 text-white relative fill-purple-500" />
+                        <div className="absolute inset-0 bg-primary blur-lg opacity-40 group-hover:opacity-80 transition-opacity" />
+                        <Zap className="h-8 w-8 text-white relative fill-primary" />
                     </div>
-                    <span className="hidden md:block font-black italic text-2xl tracking-tighter uppercase text-white ml-1">
-                        Fit<span className="text-purple-500">Track</span>
+                    <span className="hidden md:block font-black italic text-2xl tracking-tighter uppercase text-foreground ml-1">
+                        Fit<span className="text-primary">Track</span>
                     </span>
                 </Link>
             </div>
@@ -48,14 +48,14 @@ export function Sidebar() {
             </nav>
 
             <div className="p-4 mt-auto">
-                <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500/10 to-transparent border border-white/5 space-y-3">
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-black/5 space-y-3">
                     <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase text-purple-400">Sync Status</span>
-                        <div className="h-1.5 w-1.5 rounded-full bg-lime-400 animate-pulse" />
+                        <span className="text-[10px] font-bold uppercase text-primary/80">Sync Status</span>
+                        <div className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
                     </div>
-                    <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-1 w-full bg-black/5 rounded-full overflow-hidden">
                         <motion.div
-                            className="h-full bg-purple-500"
+                            className="h-full bg-primary"
                             initial={{ width: "20%" }}
                             animate={{ width: "85%" }}
                             transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
@@ -72,18 +72,18 @@ function NavItem({ href, icon, label, active }: { href: string; icon: React.Reac
         <Link
             href={href}
             className={`flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 group ${active
-                ? "bg-white/10 text-white shadow-premium border border-white/5"
-                : "text-muted-foreground hover:bg-white/5 hover:text-white"
+                ? "bg-black/5 text-foreground shadow-sm border border-black/5"
+                : "text-muted-foreground hover:bg-black/5 hover:text-foreground"
                 }`}
         >
-            <span className={`transition-transform duration-300 group-hover:scale-110 ${active ? 'text-purple-400' : ''}`}>
+            <span className={`transition-transform duration-300 group-hover:scale-110 ${active ? 'text-primary' : ''}`}>
                 {icon}
             </span>
             <span className="hidden md:block text-xs font-bold uppercase tracking-widest">{label}</span>
             {active && (
                 <motion.div
                     layoutId="active-pill"
-                    className="ml-auto h-1.5 w-1.5 rounded-full bg-purple-500 shadow-[0_0_10px_#7B5CFF]"
+                    className="ml-auto h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_10px_rgba(var(--primary),0.6)]"
                 />
             )}
         </Link>

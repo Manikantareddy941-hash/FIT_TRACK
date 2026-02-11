@@ -28,16 +28,16 @@ export default function StatsPage() {
             <motion.div variants={item} className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-10">
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                        <BarChart3 className="h-5 w-5 text-purple-400" />
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-400/60">Bio-Metric Engine</h4>
+                        <BarChart3 className="h-5 w-5 text-primary" />
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60">Bio-Metric Engine</h4>
                     </div>
                     <h2 className="text-6xl font-black italic tracking-tighter uppercase leading-none text-white">
-                        Performance <span className="text-purple-500">Analytics</span>
+                        Performance <span className="text-primary">Analytics</span>
                     </h2>
                     <p className="text-muted-foreground text-[10px] font-black uppercase tracking-[0.3em]">Deep-dive performance tracking & predictive patterns</p>
                 </div>
                 <div className="flex gap-4">
-                    <div className="px-6 py-3 rounded-2xl bg-lime-400/10 border border-lime-400/20 text-lime-400 flex items-center gap-3">
+                    <div className="px-6 py-3 rounded-2xl bg-accent/10 border border-accent/20 text-accent flex items-center gap-3">
                         <TrendingUp className="h-5 w-5" />
                         <span className="text-[10px] font-black uppercase tracking-widest">+12% Velocity This Week</span>
                     </div>
@@ -52,17 +52,17 @@ export default function StatsPage() {
                 <motion.div variants={item} className="lg:col-span-4 space-y-8">
                     <div className="glass-4k rounded-[2.5rem] p-8 border-white/5 shadow-premium space-y-6">
                         <div className="flex items-center gap-3">
-                            <Target className="h-5 w-5 text-cyan-400" />
+                            <Target className="h-5 w-5 text-accent" />
                             <h3 className="font-black italic uppercase text-lg text-white">Phase Progress</h3>
                         </div>
                         <div className="space-y-4">
-                            <AnalyticsBar label="Strength Index" value={78} color="bg-purple-500" />
-                            <AnalyticsBar label="Cardio Capacity" value={62} color="bg-cyan-500" />
-                            <AnalyticsBar label="Metabolic Rate" value={45} color="bg-lime-500" />
+                            <AnalyticsBar label="Strength Index" value={78} color="bg-primary" />
+                            <AnalyticsBar label="Cardio Capacity" value={62} color="bg-accent" />
+                            <AnalyticsBar label="Metabolic Rate" value={45} color="bg-accent/60" />
                         </div>
                     </div>
 
-                    <div className="glass-4k rounded-[2.5rem] p-8 border-white/5 shadow-premium bg-gradient-to-br from-purple-500/10 to-transparent">
+                    <div className="glass-4k rounded-[2.5rem] p-8 border-white/5 shadow-premium bg-gradient-to-br from-primary/10 to-transparent">
                         <div className="flex items-center gap-3 mb-4">
                             <Zap className="h-5 w-5 text-yellow-500" />
                             <h3 className="font-black italic uppercase text-lg text-white">Insights</h3>
@@ -75,9 +75,9 @@ export default function StatsPage() {
             </div>
 
             <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <MetricCard label="Total Energy Expended" value="24,520" unit="KCAL" icon={<Activity className="h-5 w-5 text-red-500" />} />
-                <MetricCard label="Average Heart Rate" value="142" unit="BPM" icon={<TrendingUp className="h-5 w-5 text-cyan-500" />} />
-                <MetricCard label="Peak Session Time" value="72" unit="MIN" icon={<Zap className="h-5 w-5 text-purple-500" />} />
+                <MetricCard label="Total Energy Expended" value="24,520" unit="KCAL" icon={<Activity className="h-5 w-5 text-destructive" />} />
+                <MetricCard label="Average Heart Rate" value="142" unit="BPM" icon={<TrendingUp className="h-5 w-5 text-accent" />} />
+                <MetricCard label="Peak Session Time" value="72" unit="MIN" icon={<Zap className="h-5 w-5 text-primary" />} />
             </motion.div>
         </motion.div>
     );

@@ -48,7 +48,7 @@ export function WorkoutVideos() {
                         target="_blank"
                         rel="noopener noreferrer"
                         whileHover={{ y: -10 }}
-                        className="group relative flex flex-col glass-4k rounded-[2rem] border-white/5 overflow-hidden transition-all duration-500 shadow-premium"
+                        className="group relative flex flex-col glass-4k rounded-[2.5rem] overflow-hidden transition-all duration-500 shadow-2xl border-none"
                     >
                         <div className="relative aspect-video overflow-hidden">
                             <img
@@ -60,7 +60,7 @@ export function WorkoutVideos() {
 
                             <div className="absolute top-4 left-4 flex gap-2">
                                 <div className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center gap-1.5">
-                                    <div className="h-1.5 w-1.5 rounded-full bg-lime-400 animate-pulse" />
+                                    <div className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
                                     <span className="text-[8px] font-black uppercase tracking-widest text-white">{video.level}</span>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@ export function WorkoutVideos() {
 
                         <div className="p-6 space-y-3">
                             <div>
-                                <h3 className="font-black italic text-lg line-clamp-1 text-white tracking-tight group-hover:text-purple-400 transition-colors uppercase">{video.title}</h3>
+                                <h3 className="font-black italic text-lg line-clamp-1 text-white tracking-tight group-hover:text-primary transition-colors uppercase">{video.title}</h3>
                                 <div className="flex items-center gap-2 mt-1">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/60">{video.channel}</p>
                                     <div className="h-1 w-1 rounded-full bg-white/10" />
@@ -86,7 +86,7 @@ export function WorkoutVideos() {
                             </div>
                             <div className="flex gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
                                 <div className="h-1 rounded-full bg-white/10 flex-1 overflow-hidden">
-                                    <div className="h-full bg-purple-500 w-0 group-hover:w-full transition-all duration-1000" />
+                                    <div className="h-full bg-primary w-0 group-hover:w-full transition-all duration-1000" />
                                 </div>
                             </div>
                         </div>
