@@ -29,34 +29,29 @@ export default function RootLayout({
   );
 
   const [mounted, setMounted] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
 
-  // ✅ Effect 1: handle mounting and hydration
+  // Only hydration guard
   useEffect(() => {
     setMounted(true);
-    setShowOnboarding(!hasCompletedOnboarding);
 
-    // Attach debug helper (dev only)
     if (process.env.NODE_ENV === "development") {
       (window as any).resetOnboarding = () => {
         localStorage.clear();
         console.log("Onboarding state cleared");
       };
     }
-  }, [hasCompletedOnboarding]);
+  }, []);
 
-  // ✅ Effect 2: sync onboarding UI when state changes
-  useEffect(() => {
-    if (mounted) {
-      setShowOnboarding(!hasCompletedOnboarding);
-    }
-  }, [hasCompletedOnboarding, mounted]);
+  const shouldShowOnboarding = mounted && !hasCompletedOnboarding;
 
   return (
     <html lang="en" className="light" suppressHydrationWarning>
-      <body className={`${outfit.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground flex font-sans`} suppressHydrationWarning>
-        {mounted && showOnboarding && !hasCompletedOnboarding && (
-          <OnboardingWizard onComplete={() => setShowOnboarding(false)} />
+      <body
+        className={`${outfit.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground flex font-sans`}
+        suppressHydrationWarning
+      >
+        {shouldShowOnboarding && (
+          <OnboardingWizard />
         )}
 
         <div className="hidden lg:block">
