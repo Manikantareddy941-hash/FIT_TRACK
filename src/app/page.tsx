@@ -2,7 +2,6 @@
 
 import { ActivityChart } from "@/components/dashboard/ActivityChart";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
-import { StatRing } from "@/components/dashboard/StatRing";
 import { WaterTracker } from "@/components/dashboard/WaterTracker";
 import { WorkoutVideos } from "@/components/dashboard/WorkoutVideos";
 import { TodayWorkoutCard } from "@/components/dashboard/TodayWorkoutCard";
@@ -16,40 +15,40 @@ import { AddActivityDialog } from "@/components/forms/AddActivityDialog";
 import { StatsGlance } from "@/components/dashboard/StatsGlance";
 import { Greeting } from "@/components/dashboard/Greeting";
 import { useFitnessStore } from "@/store/fitness-store";
-import { Flame, Footprints, Timer, Sparkles, MapPin } from "lucide-react";
+import { Timer, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
+    transition: { staggerChildren: 0.1 },
+  },
 };
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 export default function Home() {
   const stats = useFitnessStore((state) => state.stats);
   const hasCompletedOnboarding = useFitnessStore((state) => state.hasCompletedOnboarding);
-
   const activeSession = useFitnessStore((state) => state.activeSession);
-  const progress = useFitnessStore((state) => state.progress);
   const checkDailyReset = useFitnessStore((state) => state.checkDailyReset);
 
   useEffect(() => {
     checkDailyReset();
-  }, []);
+  }, [checkDailyReset]);
 
-  const activeMinutes = activeSession.isActive && activeSession.startTime
-    ? Math.floor((Date.now() - activeSession.startTime) / 60000)
-    : 0;
+  // ✅ FIX: make calculation pure using useMemo
+  const activeMinutes = useMemo(() => {
+    if (activeSession.isActive && activeSession.startTime) {
+      return Math.floor((Date.now() - activeSession.startTime) / 60000);
+    }
+    return 0;
+  }, [activeSession]);
 
   return (
     <motion.div
@@ -58,8 +57,11 @@ export default function Home() {
       animate="show"
       className="max-w-[1600px] mx-auto space-y-12 pb-24"
     >
-      {/* Header Section */}
-      <motion.div variants={item} className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/5 pb-10">
+      {/* Header */}
+      <motion.div
+        variants={item}
+        className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-black/5 pb-10"
+      >
         <div className="space-y-6">
           <SocialProof />
           <Greeting />
@@ -69,14 +71,13 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Quick Stats Summary */}
+      {/* Quick stats */}
       <motion.div variants={item}>
         <StatsGlance />
       </motion.div>
 
-      {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-        {/* Primary Content Column */}
+        {/* Main column */}
         <div className="lg:col-span-8 space-y-12">
           <motion.div variants={item}>
             {hasCompletedOnboarding && <TodayWorkoutCard />}
@@ -86,31 +87,48 @@ export default function Home() {
             <MoodSelector />
           </motion.div>
 
-          <motion.div variants={item} className="p-10 rounded-[2.5rem] glass-4k flex flex-col justify-center relative overflow-hidden group">
+          {/* Live block */}
+          <motion.div
+            variants={item}
+            className="p-10 rounded-[2.5rem] glass-4k flex flex-col justify-center relative overflow-hidden group"
+          >
             <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-20 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12">
-              {activeSession.isActive ? <MapPin className="h-32 w-32 text-accent animate-pulse" /> : <Timer className="h-32 w-32 text-accent" />}
+              {activeSession.isActive ? (
+                <MapPin className="h-32 w-32 text-accent animate-pulse" />
+              ) : (
+                <Timer className="h-32 w-32 text-accent" />
+              )}
             </div>
+
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div>
                 <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-accent/60 mb-3 ml-1">
                   {activeSession.isActive ? "Live Satellite Link" : "Active Bio-Time"}
                 </h4>
+
                 <div className="text-8xl font-black italic text-foreground tracking-tighter leading-none">
-                  {activeSession.isActive ? Math.round(activeSession.distance) : stats.moveMin}
+                  {activeSession.isActive
+                    ? Math.round(activeSession.distance)
+                    : stats.moveMin}
+
                   <span className="text-2xl text-accent/40 not-italic ml-2 font-black uppercase tracking-widest">
                     {activeSession.isActive ? "m" : "min"}
                   </span>
                 </div>
               </div>
+
               <div className="md:w-64">
                 <WaterTracker />
               </div>
             </div>
+
             <div className="h-2 w-full bg-black/5 rounded-full mt-10 overflow-hidden border border-black/5">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: activeSession.isActive ? "100%" : "70%" }}
-                className={`h-full bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-gradient-x shadow-[0_0_20px_rgba(var(--primary),0.3)] ${activeSession.isActive ? "animate-pulse" : ""}`}
+                className={`h-full bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-gradient-x shadow-[0_0_20px_rgba(var(--primary),0.3)] ${
+                  activeSession.isActive ? "animate-pulse" : ""
+                }`}
               />
             </div>
           </motion.div>
@@ -121,7 +139,7 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Sidebar Column */}
+        {/* Sidebar */}
         <div className="lg:col-span-4 space-y-10">
           <motion.div variants={item}>
             <MusicPlayer />
@@ -135,7 +153,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Floating Active Tracker */}
       <LiveTracker />
 
       <motion.div variants={item}>
